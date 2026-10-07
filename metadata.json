@@ -1,0 +1,6 @@
+{
+  "name": "GeoFiscal SEMA",
+  "description": "Aplicativo de fiscalização ambiental e geolocalização com fotos criptografadas, integração SEMA-MT, sincronização offline, mapas e relatórios PDF/Excel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

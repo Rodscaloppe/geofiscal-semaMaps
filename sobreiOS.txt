@@ -1,0 +1,29 @@
+Sim, é possível desenvolver para iOS no Android Studio, mas com algumas condições importantes sobre como a Apple e o Android Studio funcionam:
+1. Como funciona o suporte a iOS no Android Studio?
+O Android Studio possui suporte oficial a Kotlin Multiplatform (KMP) e Compose Multiplatform (desenvolvido pela JetBrains/Google):
+Você escreve em Kotlin: Toda a lógica de negócio, modelos, banco de dados e até a interface em Jetpack/Compose podem ser compartilhados entre Android e iOS.
+O Android Studio gerencia o código do iOS: Com o plugin Kotlin Multiplatform instalado no Android Studio, você edita o código compartilhado e a estrutura do iOS diretamente por ele.
+2. O Requisito Obrigatório da Apple (macOS + Xcode)
+Independentemente de usar Android Studio, VS Code ou Flutter, a Apple exige o compilador do Xcode (macOS) para assinar e empacotar o arquivo final (.ipa) ou rodar no simulador de iPhone:
+Se você usa um Mac:
+Você pode usar o Android Studio no Mac.
+O Android Studio se comunica diretamente com o Xcode instalado na sua máquina.
+Você consegue executar tanto o emulador Android quanto o Simulador de iOS diretamente de dentro do Android Studio.
+Se você usa Windows ou Linux:
+O Android Studio no Windows/Linux não consegue gerar o binário .ipa localmente porque as ferramentas da Apple não existem para Windows/Linux.
+Solução sem ter um Mac: Você sobe o código para o GitHub e usa serviços de automação em nuvem (como GitHub Actions, Codemagic ou Bitrise com runners macOS). A nuvem compila o projeto KMP e entrega o instalador de iOS pronto para testes (via TestFlight).
+3. Como migrar este projeto (GeoFiscal SEMA) para iOS no Android Studio
+Para aproveitar ao máximo o código já pronto deste app:
+Camada Compartilhada (KMP - commonMain):
+Cálculos geodésicos (fórmula de Haversine, cálculo de distâncias, validação de CAR, cálculo de áreas).
+ViewModels e regras de fiscalização.
+Telas e componentes visuais (usando Compose Multiplatform, cuja sintaxe é praticamente idêntica ao Jetpack Compose deste app).
+Camadas Específicas (androidMain e iosMain):
+Localização: Android usa FusedLocationProviderClient; no iOS usa-se CoreLocation.
+Câmera: Android usa CameraX; no iOS usa-se AVFoundation.
+Mapas: Android usa Google Maps SDK; no iOS usa-se MapKit ou o Google Maps iOS SDK.
+4. Como abrir e rodar o projeto atual no seu Android Studio:
+No menu superior direito do AI Studio, clique nas opções do projeto e selecione Download as ZIP (ou vincule com seu repositório no GitHub).
+Abra o Android Studio no seu computador.
+Clique em File > Open e selecione a pasta do projeto descompactada.
+O Gradle irá sincronizar todas as dependências automaticamente e você já poderá rodar o aplicativo no emulador ou no seu dispositivo físico conectado via USB.

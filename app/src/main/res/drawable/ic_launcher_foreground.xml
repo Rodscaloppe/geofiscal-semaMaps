@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="18.9"
+        android:translateY="18.9">
+        <!-- Shield Background Accent -->
+        <path
+            android:fillColor="#2EE59D"
+            android:pathData="M54,12 L84,24 V52 C84,72 71,89 54,96 C37,89 24,72 24,52 V24 Z" />
+        <!-- Inner Dark Shield -->
+        <path
+            android:fillColor="#0D5C3A"
+            android:pathData="M54,18 L78,28 V52 C78,68 68,82 54,88 C40,82 30,68 30,52 V28 Z" />
+        <!-- Geo Pin & Camera Combo -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M54,26 C45.16,26 38,33.16 38,42 C38,53 54,69 54,69 C54,69 70,53 70,42 C70,33.16 62.84,26 54,26 Z M54,49 C50.13,49 47,45.87 47,42 C47,38.13 50.13,35 54,35 C57.87,35 61,38.13 61,42 C61,45.87 57.87,49 54,49 Z" />
+        <!-- Crosshairs / Sensor Radar Rings -->
+        <path
+            android:fillColor="#A3F7BF"
+            android:pathData="M54,39 A3,3 0 1,0 54,45 A3,3 0 1,0 54,39 Z" />
+        <!-- Leaf Accent at Base -->
+        <path
+            android:fillColor="#2EE59D"
+            android:pathData="M54,74 C49,74 46,78 46,82 C50,82 54,79 54,74 Z" />
+        <path
+            android:fillColor="#81C784"
+            android:pathData="M54,74 C59,74 62,78 62,82 C58,82 54,79 54,74 Z" />
+    </group>
+</vector>
