@@ -1,0 +1,48 @@
+workflows:
+  ios-kmp:
+    name: GeoFiscal SEMA - iOS Build (KMP)
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      xcode: latest
+      java: 21
+      vars:
+        XCODE_PROJECT: "iosApp/iosApp.xcodeproj"
+        XCODE_SCHEME: "iosApp"
+    scripts:
+      - name: Set permissions
+        script: chmod +x gradlew
+      - name: Build shared KMP framework for iOS
+        script: |
+          ./gradlew :shared:linkReleaseFrameworkIosArm64
+      - name: Build iOS App
+        script: |
+          cd iosApp
+          xcodebuild build \
+            -project iosApp.xcodeproj \
+            -scheme "$XCODE_SCHEME" \
+            -destination "generic/platform=iOS" \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+    artifacts:
+      - ~/Library/Developer/Xcode/DerivedData/**/Build/Products/*-iphoneos/*.app
+      - build/ios/ipa/*.ipa
+
+  android-app:
+    name: GeoFiscal SEMA - Android Build
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      java: 21
+    scripts:
+      - name: Set permissions
+        script: chmod +x gradlew
+      - name: Setup environment
+        script: cp .env.example .env
+      - name: Build Android APK
+        script: |
+          ./gradlew :app:assembleDebug
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk
