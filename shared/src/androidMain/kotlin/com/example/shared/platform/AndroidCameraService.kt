@@ -1,9 +1,6 @@
 package com.example.shared.platform
 
 import android.content.Context
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageProxy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +11,6 @@ actual class PlatformCameraService(private val context: Context) {
     actual val cameraStatus: StateFlow<CameraStatus> = _cameraStatus.asStateFlow()
 
     actual suspend fun capturePhoto(): CaptureResult {
-        // Delegates to CameraCaptureService in the app module
         throw UnsupportedOperationException(
             "Use CameraCaptureService from the app module for Android camera capture"
         )

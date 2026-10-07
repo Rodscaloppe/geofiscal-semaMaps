@@ -1,3 +1,5 @@
+@file:OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+
 package com.example.shared.platform
 
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,8 +13,8 @@ import platform.AVFoundation.AVCaptureSessionPresetPhoto
 import platform.AVFoundation.AVCaptureDevicePositionBack
 import platform.AVFoundation.AVCaptureDevicePositionFront
 import platform.AVFoundation.AVMediaTypeVideo
-import platform.Foundation.NSData
-import kotlin.coroutines.resume
+import platform.AVFoundation.hasTorch
+import platform.AVFoundation.flashAvailable
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
@@ -58,7 +60,7 @@ actual class PlatformCameraService {
         _cameraStatus.value = CameraStatus(
             isInitialized = true,
             isFrontCamera = useFrontCamera,
-            hasFlash = device.hasFlash,
+            hasFlash = device.hasTorch || device.flashAvailable,
             isFlashOn = false
         )
     }
@@ -68,8 +70,6 @@ actual class PlatformCameraService {
 
         _cameraStatus.value = _cameraStatus.value.copy(isTakingPicture = true)
 
-        // The actual photo capture on iOS needs the AVCapturePhotoCaptureDelegate
-        // which is implemented in the Swift layer (iosApp) for proper UIImage handling
         return suspendCoroutine { continuation ->
             _cameraStatus.value = _cameraStatus.value.copy(isTakingPicture = false)
             continuation.resumeWithException(
@@ -88,7 +88,7 @@ actual class PlatformCameraService {
 
     actual fun toggleFlash() {
         val device = currentDevice ?: return
-        if (!device.hasFlash) return
+        if (!device.hasTorch && !device.flashAvailable) return
 
         val nextState = !_cameraStatus.value.isFlashOn
         _cameraStatus.value = _cameraStatus.value.copy(isFlashOn = nextState)

@@ -1,17 +1,17 @@
+@file:OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+
 package com.example.shared.platform
 
+import kotlinx.cinterop.useContents
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import platform.CoreLocation.CLLocation
 import platform.CoreLocation.CLLocationManager
 import platform.CoreLocation.CLLocationManagerDelegateProtocol
-import platform.CoreLocation.kCLDistanceFilterNone
 import platform.CoreLocation.kCLLocationAccuracyBest
-import platform.Foundation.NSObject
-import platform.darwin.NSObject as DarwinNSObject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import platform.Foundation.timeIntervalSince1970
+import platform.darwin.NSObject
 
 actual class PlatformLocationService {
 
@@ -79,28 +79,35 @@ actual class PlatformLocationService {
     }
 
     private fun processLocation(location: CLLocation) {
+        val (lat, lng) = location.coordinate.useContents { latitude to longitude }
+
         previousLat?.let { pLat ->
             previousLng?.let { pLng ->
                 val dist = com.example.shared.geo.GeoCalculations.haversineDistanceMeters(
-                    pLat, pLng, location.coordinate.latitude, location.coordinate.longitude
+                    pLat, pLng, lat, lng
                 )
                 if (dist in 1.5..500.0) totalDistance += dist
             }
         }
-        previousLat = location.coordinate.latitude
-        previousLng = location.coordinate.longitude
+        previousLat = lat
+        previousLng = lng
 
         val speedKmh = if (location.speed >= 0) (location.speed * 3.6).toFloat() else 0f
         val bearing = if (location.course >= 0) location.course.toFloat() else 0f
+        val timestampMs = try {
+            (location.timestamp.timeIntervalSince1970 * 1000.0).toLong()
+        } catch (_: Exception) {
+            0L
+        }
 
         _locationData.value = LocationData(
-            latitude = location.coordinate.latitude,
-            longitude = location.coordinate.longitude,
+            latitude = lat,
+            longitude = lng,
             altitude = location.altitude,
             accuracyMeters = location.horizontalAccuracy.toFloat(),
             speedKmh = speedKmh,
             bearingDegrees = bearing,
-            timestamp = (location.timestamp.timeIntervalSince1970 * 1000).toLong(),
+            timestamp = timestampMs,
             isGpsFixed = location.horizontalAccuracy >= 0,
             isMockLocation = false,
             provider = "CoreLocation",

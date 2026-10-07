@@ -1,13 +1,19 @@
+@file:OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+
 package com.example.shared.platform
 
+import kotlin.math.PI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import platform.CoreMotion.CMAltimeter
 import platform.CoreMotion.CMMotionManager
 import platform.Foundation.NSOperationQueue
+
+private fun Double.toDegrees(): Double = this * 180.0 / PI
 
 actual class PlatformSensorManager {
 
@@ -46,21 +52,21 @@ actual class PlatformSensorManager {
             ) { motion, _ ->
                 motion?.let {
                     val attitude = it.attitude
-                    var azimuth = Math.toDegrees(attitude.yaw).toFloat()
+                    var azimuth = attitude.yaw.toDegrees().toFloat()
                     if (azimuth < 0) azimuth += 360f
 
                     _telemetry.value = _telemetry.value.copy(
                         azimuthBearing = azimuth,
-                        pitch = Math.toDegrees(attitude.pitch).toFloat(),
-                        roll = Math.toDegrees(attitude.roll).toFloat()
+                        pitch = attitude.pitch.toDegrees().toFloat(),
+                        roll = attitude.roll.toDegrees().toFloat()
                     )
                 }
             }
         }
 
         // Barômetro via CMAltimeter
-        if (platform.CoreMotion.CMAltimeter.isRelativeAltitudeAvailable()) {
-            val altimeter = platform.CoreMotion.CMAltimeter()
+        if (CMAltimeter.isRelativeAltitudeAvailable()) {
+            val altimeter = CMAltimeter()
             altimeter.startRelativeAltitudeUpdatesToQueue(
                 NSOperationQueue.mainQueue
             ) { data, _ ->

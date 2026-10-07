@@ -1,9 +1,14 @@
 package com.example.shared.geo
 
+import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+
+private fun Double.toRadians(): Double = this * PI / 180.0
+private fun Double.toDegrees(): Double = this * 180.0 / PI
 
 object GeoCalculations {
 
@@ -11,10 +16,10 @@ object GeoCalculations {
     private const val EARTH_RADIUS_M = 6_371_000.0
 
     fun haversineDistanceKm(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val dLat = Math.toRadians(lat2 - lat1)
-        val dLon = Math.toRadians(lon2 - lon1)
+        val dLat = (lat2 - lat1).toRadians()
+        val dLon = (lon2 - lon1).toRadians()
         val a = sin(dLat / 2) * sin(dLat / 2) +
-                cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
+                cos(lat1.toRadians()) * cos(lat2.toRadians()) *
                 sin(dLon / 2) * sin(dLon / 2)
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
         return EARTH_RADIUS_KM * c
@@ -41,12 +46,12 @@ object GeoCalculations {
         val n = vertices.size
         for (i in 0 until n) {
             val j = (i + 1) % n
-            val lat1 = Math.toRadians(vertices[i].first)
-            val lat2 = Math.toRadians(vertices[j].first)
-            val dLon = Math.toRadians(vertices[j].second - vertices[i].second)
+            val lat1 = vertices[i].first.toRadians()
+            val lat2 = vertices[j].first.toRadians()
+            val dLon = (vertices[j].second - vertices[i].second).toRadians()
             area += dLon * (2 + sin(lat1) + sin(lat2))
         }
-        area = kotlin.math.abs(area * EARTH_RADIUS_M * EARTH_RADIUS_M / 2.0)
+        area = abs(area * EARTH_RADIUS_M * EARTH_RADIUS_M / 2.0)
         return area / 10_000.0
     }
 
@@ -56,12 +61,12 @@ object GeoCalculations {
     }
 
     fun bearingBetween(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val dLon = Math.toRadians(lon2 - lon1)
-        val lat1Rad = Math.toRadians(lat1)
-        val lat2Rad = Math.toRadians(lat2)
+        val dLon = (lon2 - lon1).toRadians()
+        val lat1Rad = lat1.toRadians()
+        val lat2Rad = lat2.toRadians()
         val y = sin(dLon) * cos(lat2Rad)
         val x = cos(lat1Rad) * sin(lat2Rad) - sin(lat1Rad) * cos(lat2Rad) * cos(dLon)
-        var bearing = Math.toDegrees(atan2(y, x))
+        var bearing = atan2(y, x).toDegrees()
         if (bearing < 0) bearing += 360.0
         return bearing
     }
