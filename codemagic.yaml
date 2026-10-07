@@ -1,38 +1,6 @@
 workflows:
-  # Workflow 1: Build iOS sem necessidade de certificados Apple (para testar o código agora)
-  ios-build:
-    name: GeoFiscal SEMA - iOS Build (Sem Certificado)
-    max_build_duration: 30
-    instance_type: mac_mini_m2
-    environment:
-      xcode: latest
-      java: 21
-      vars:
-        XCODE_PROJECT: "iosApp/iosApp.xcodeproj"
-        XCODE_SCHEME: "iosApp"
-    scripts:
-      - name: Set permissions
-        script: chmod +x gradlew
-      - name: Build KMP Shared Framework
-        script: |
-          ./gradlew :shared:linkReleaseFrameworkIosArm64
-      - name: Build iOS App
-        script: |
-          xcodebuild build \
-            -project "$XCODE_PROJECT" \
-            -scheme "$XCODE_SCHEME" \
-            -destination "generic/platform=iOS" \
-            -configuration Debug \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
-    artifacts:
-      - ~/Library/Developer/Xcode/DerivedData/**/Build/Products/*-iphoneos/*.app
-      - build/ios/ipa/*.ipa
-
-  # Workflow 2: Publicação oficial no TestFlight (requer integração Apple no Codemagic)
   ios-testflight:
-    name: GeoFiscal SEMA - iOS TestFlight (Assinado)
+    name: GeoFiscal SEMA - iOS TestFlight
     max_build_duration: 40
     instance_type: mac_mini_m2
     environment:
@@ -41,9 +9,11 @@ workflows:
       vars:
         XCODE_PROJECT: "iosApp/iosApp.xcodeproj"
         XCODE_SCHEME: "iosApp"
+        APP_STORE_APPLE_ID: 1234567890 # ID numérico do seu app no App Store Connect
     scripts:
       - name: Set permissions
         script: chmod +x gradlew
+
       - name: Configurar Assinatura Automática (Code Signing)
         script: |
           keychain initialize
@@ -52,38 +22,27 @@ workflows:
             --create
           keychain add-certificates
           xcode-project use-profiles
+
       - name: Build KMP Shared Framework
         script: |
           ./gradlew :shared:linkReleaseFrameworkIosArm64
+
       - name: Build e Empacotar IPA
         script: |
+          cd iosApp
           xcode-project build-ipa \
-            --project "$XCODE_PROJECT" \
+            --project iosApp.xcodeproj \
             --scheme "$XCODE_SCHEME" \
             --archive-flags="-destination 'generic/platform=iOS'"
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
       app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY # Chave configurada na integração
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
-        submit_to_testflight: true
-
-  # Workflow 3: Build do Android (APK de teste)
-  android-app:
-    name: GeoFiscal SEMA - Android Build
-    max_build_duration: 30
-    instance_type: mac_mini_m2
-    environment:
-      java: 21
-    scripts:
-      - name: Set permissions
-        script: chmod +x gradlew
-      - name: Setup environment
-        script: cp .env.example .env
-      - name: Build Android APK
-        script: |
-          ./gradlew :app:assembleDebug
-    artifacts:
-      - app/build/outputs/apk/debug/*.apk
+        submit_to_testflight: true  # Envia direto para o TestFlight!
+        beta_groups:
+          - "Fiscais SEMA"          # Grupo de testadores no TestFlight
