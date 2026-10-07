@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "GeoFiscal SEMA"
 
 include(":app")
+include(":shared")
