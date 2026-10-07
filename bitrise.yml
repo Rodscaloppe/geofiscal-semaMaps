@@ -5,19 +5,40 @@ project_type: ios
 
 workflows:
   primary:
-    summary: Build KMP shared framework and iOS App
+    summary: Build KMP shared framework e iOS App
     steps:
     - activate-ssh-key@4:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@8: {}
     - script@1:
-        title: Set executable permissions on gradlew
-        inputs:
-        - content: chmod +x gradlew
-    - script@1:
-        title: Build KMP Shared Framework
+        title: Compilar Framework KMP (Kotlin Multiplatform)
         inputs:
         - content: |
+            chmod +x gradlew
+            ./gradlew :shared:linkReleaseFrameworkIosArm64
+    - xcode-archive@5:
+        title: Xcode Build & Archive
+        inputs:
+        - project_path: iosApp/iosApp.xcodeproj
+        - scheme: iosApp
+        - distribution_method: development
+        - configuration: Debug
+        - automatic_code_signing: 'off'
+    - deploy-to-bitrise-io@2:
+        inputs:
+        - notify_user_groups: none
+
+  run_tests:
+    summary: Build e testes
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@8: {}
+    - script@1:
+        title: Compilar Framework KMP (Kotlin Multiplatform)
+        inputs:
+        - content: |
+            chmod +x gradlew
             ./gradlew :shared:linkReleaseFrameworkIosArm64
     - xcode-archive@5:
         title: Xcode Build & Archive
