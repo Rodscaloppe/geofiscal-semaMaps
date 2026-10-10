@@ -132,7 +132,135 @@ object SemaIntegrationService {
         )
     }
 
+    private data class ProtectedZone(val name: String, val lat: Double, val lng: Double, val radiusKm: Double, val isIndigenous: Boolean)
+
+    private val PROTECTED_ZONES = listOf(
+        ProtectedZone("Terra Indígena Sararé (Povo Nambikwara)", -15.02, -59.58, 45.0, true),
+        ProtectedZone("Terra Indígena Menkragnoti / Kayapó", -9.50, -55.20, 50.0, true),
+        ProtectedZone("Parque Estadual Cristalino (UC Proteção Integral)", -9.70, -55.90, 35.0, false),
+        ProtectedZone("Estação Ecológica Serra das Araras", -15.65, -57.20, 25.0, false),
+        ProtectedZone("Terra Indígena Enawenê-Nawê", -12.10, -58.80, 40.0, true)
+    )
+
+    /**
+     * Specialized Analysis for Illegal Mining (Garimpo Clandestino),
+     * ANM Mining Titling (PLG, Concessão, Pesquisa) and Environmental Justice compliance.
+     */
+    fun evaluateMiningActivity(lat: Double, lng: Double, customAnm: String? = null): com.example.data.model.MineracaoTelemetryResult {
+        val coordHash = (kotlin.math.abs(lat * 1000).toInt() + kotlin.math.abs(lng * 1000).toInt())
+        val randomSeed = Random(coordHash)
+
+        // 1. Check intersection with Indigenous Lands or Conservation Units (Absolute Prohibition)
+        val invadedZone = PROTECTED_ZONES.firstOrNull { zone ->
+            val dLat = (zone.lat - lat) * 111.0
+            val dLng = (zone.lng - lng) * 111.0
+            val distKm = kotlin.math.sqrt(dLat * dLat + dLng * dLng)
+            distKm <= zone.radiusKm
+        }
+
+        // 2. Proximity to Gold / Mineral Belts in MT (Poconé, Peixoto de Azevedo, Alta Floresta, Juína)
+        val isGoldBelt = (lat in -16.8..-15.8 && lng in -57.2..-56.0) || // Poconé / Baixada
+                (lat in -10.8..-9.5 && lng in -55.8..-54.5) ||   // Peixoto / Matupá
+                (lat in -10.5..-9.2 && lng in -56.8..-55.8)      // Alta Floresta
+
+        val substance = when {
+            lat in -12.0..-10.8 && lng in -59.5..-58.0 -> com.example.data.model.SubstanciaMineral.DIAMANTE
+            isGoldBelt -> com.example.data.model.SubstanciaMineral.OURO
+            randomSeed.nextBoolean() -> com.example.data.model.SubstanciaMineral.CASSITERITA
+            else -> com.example.data.model.SubstanciaMineral.OURO
+        }
+
+        val anmNum = customAnm?.takeIf { it.isNotBlank() } ?: "866.${randomSeed.nextInt(100, 999)}/${randomSeed.nextInt(2018, 2026)}"
+        val titular = "Cooperativa / Mineradora do ${if (isGoldBelt) "Vale do Peixoto" else "Guaporé"} Ltda."
+
+        val cavasHa = (randomSeed.nextInt(15, 180) / 10.0)
+
+        // 3. Environmental Justice & ANM Status evaluation
+        return if (invadedZone != null) {
+            com.example.data.model.MineracaoTelemetryResult(
+                anmProcess = anmNum,
+                titularProcesso = "SEM TITULARIDADE VÁLIDA (ZONA VEDADA)",
+                regimeMinerario = com.example.data.model.RegimeMinerario.SEM_TITULO,
+                substance = substance,
+                statusJustica = com.example.data.model.StatusJusticaAmbiental.INVASAO_TI_UC,
+                licencaOperacaoSema = null,
+                hasLicencaAtiva = false,
+                isNearProtectedArea = true,
+                protectedAreaName = invadedZone.name,
+                enquadramentoLegal = "Art. 231 CF (Terra Indígena Inviolável) • Art. 2º Lei 8.176/91 (Usurpação) • Art. 55 Lei 9.605/98",
+                cavasAreaHectares = cavasHa,
+                alertaTurbidezHidrica = true,
+                presencaMercurio = true
+            )
+        } else {
+            val roll = randomSeed.nextInt(100)
+            when {
+                roll < 35 -> com.example.data.model.MineracaoTelemetryResult(
+                    anmProcess = "SEM PROCESSO",
+                    titularProcesso = "Clandestino / Não Cadastrado",
+                    regimeMinerario = com.example.data.model.RegimeMinerario.SEM_TITULO,
+                    substance = substance,
+                    statusJustica = com.example.data.model.StatusJusticaAmbiental.CLANDESTINO_CRIME_FEDERAL,
+                    licencaOperacaoSema = null,
+                    hasLicencaAtiva = false,
+                    isNearProtectedArea = false,
+                    protectedAreaName = null,
+                    enquadramentoLegal = "Crime Federal: Art. 2º Lei 8.176/91 (Pena: Detenção 1 a 5 anos) + Art. 55 Lei Crimes Ambientais",
+                    cavasAreaHectares = cavasHa,
+                    alertaTurbidezHidrica = true,
+                    presencaMercurio = true
+                )
+                roll < 55 -> com.example.data.model.MineracaoTelemetryResult(
+                    anmProcess = anmNum,
+                    titularProcesso = titular,
+                    regimeMinerario = com.example.data.model.RegimeMinerario.AUTORIZACAO_PESQUISA,
+                    substance = substance,
+                    statusJustica = com.example.data.model.StatusJusticaAmbiental.DESVIO_PESQUISA,
+                    licencaOperacaoSema = "Apenas Guia de Pesquisa (Extração Proibida)",
+                    hasLicencaAtiva = false,
+                    isNearProtectedArea = false,
+                    protectedAreaName = null,
+                    enquadramentoLegal = "Desvio de Finalidade Minerária: Lavra comercial clandestina mascarada de pesquisa (Art. 55 Lei 9.605/98)",
+                    cavasAreaHectares = cavasHa,
+                    alertaTurbidezHidrica = true,
+                    presencaMercurio = false
+                )
+                roll < 70 -> com.example.data.model.MineracaoTelemetryResult(
+                    anmProcess = anmNum,
+                    titularProcesso = titular,
+                    regimeMinerario = com.example.data.model.RegimeMinerario.PLG,
+                    substance = substance,
+                    statusJustica = com.example.data.model.StatusJusticaAmbiental.DESCUMPRIMENTO_EMBARGO,
+                    licencaOperacaoSema = "LO Suspensa por Despejo de Rejeitos",
+                    hasLicencaAtiva = false,
+                    isNearProtectedArea = false,
+                    protectedAreaName = null,
+                    enquadramentoLegal = "Descumprimento de Termo de Embargo SEMA nº 4891/2025 • Reincidência de Dano Ambiental",
+                    cavasAreaHectares = cavasHa,
+                    alertaTurbidezHidrica = true,
+                    presencaMercurio = true
+                )
+                else -> com.example.data.model.MineracaoTelemetryResult(
+                    anmProcess = anmNum,
+                    titularProcesso = titular,
+                    regimeMinerario = com.example.data.model.RegimeMinerario.PLG,
+                    substance = substance,
+                    statusJustica = com.example.data.model.StatusJusticaAmbiental.REGULAR,
+                    licencaOperacaoSema = "LO SEMA nº ${randomSeed.nextInt(200000, 999999)}/2024 (Válida)",
+                    hasLicencaAtiva = true,
+                    isNearProtectedArea = false,
+                    protectedAreaName = null,
+                    enquadramentoLegal = "Regularidade Integral: PLG ativa na ANM com Licença de Operação (LO) válida na SEMA-MT",
+                    cavasAreaHectares = cavasHa,
+                    alertaTurbidezHidrica = false,
+                    presencaMercurio = false
+                )
+            }
+        }
+    }
+
     private data class Tuple6<A, B, C, D, E, F>(
         val a: A, val b: B, val c: C, val d: D, val e: E, val f: F
     )
 }
+

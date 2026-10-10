@@ -61,6 +61,12 @@ class InspectionViewModel(application: Application) : AndroidViewModel(applicati
     )
     val currentSemaTelemetry: StateFlow<SemaTelemetryResult> = _currentSemaTelemetry.asStateFlow()
 
+    // Live ANM & Environmental Justice Mining evaluation
+    private val _currentMiningTelemetry = MutableStateFlow<com.example.data.model.MineracaoTelemetryResult>(
+        SemaIntegrationService.evaluateMiningActivity(-15.6014, -56.0979)
+    )
+    val currentMiningTelemetry: StateFlow<com.example.data.model.MineracaoTelemetryResult> = _currentMiningTelemetry.asStateFlow()
+
     // Captured image state for current inspection form
     private val _capturedPhoto = MutableStateFlow<Bitmap?>(null)
     val capturedPhoto: StateFlow<Bitmap?> = _capturedPhoto.asStateFlow()
@@ -81,10 +87,11 @@ class InspectionViewModel(application: Application) : AndroidViewModel(applicati
         NotificationHelper.initNotificationChannels(application)
         sensorManager.startListening()
 
-        // Update SEMA evaluation whenever GPS moves noticeably
+        // Update SEMA and Mining evaluation whenever GPS moves noticeably
         viewModelScope.launch {
             sensorManager.telemetry.collect { tele ->
                 _currentSemaTelemetry.value = SemaIntegrationService.evaluateLocation(tele.latitude, tele.longitude)
+                _currentMiningTelemetry.value = SemaIntegrationService.evaluateMiningActivity(tele.latitude, tele.longitude)
             }
         }
 
@@ -96,6 +103,11 @@ class InspectionViewModel(application: Application) : AndroidViewModel(applicati
                 }
             }
         }
+    }
+
+    fun evaluateCustomAnm(anm: String) {
+        val tele = telemetry.value
+        _currentMiningTelemetry.value = SemaIntegrationService.evaluateMiningActivity(tele.latitude, tele.longitude, anm)
     }
 
     fun setCapturedPhoto(bitmap: Bitmap?) {
@@ -118,7 +130,17 @@ class InspectionViewModel(application: Application) : AndroidViewModel(applicati
         _uiMessage.value = null
     }
 
-    fun saveInspection(title: String, notes: String, inspectorName: String, onDone: () -> Unit) {
+    fun saveInspection(
+        title: String,
+        notes: String,
+        inspectorName: String,
+        anmProcessNumber: String = "",
+        miningRegime: String = "SEM_TITULO",
+        mineralSubstance: String = "OURO",
+        justiceStatus: String = "REGULAR",
+        seizedMachinery: String = "",
+        onDone: () -> Unit
+    ) {
         viewModelScope.launch {
             val photo = _capturedPhoto.value ?: createPlaceholderInspectionBitmap()
             val tele = telemetry.value
@@ -130,14 +152,19 @@ class InspectionViewModel(application: Application) : AndroidViewModel(applicati
                 sensorTelemetry = tele,
                 semaTelemetry = sema,
                 inspectorName = inspectorName,
-                notes = notes
+                notes = notes,
+                anmProcessNumber = anmProcessNumber,
+                miningRegime = miningRegime,
+                mineralSubstance = mineralSubstance,
+                justiceStatus = justiceStatus,
+                seizedMachinery = seizedMachinery
             )
 
             _capturedPhoto.value = null
             _uiMessage.value = if (saved.hasIrregularity) {
-                "Vistoria salva! Alerta de irregularidade emitido para a fiscalização."
+                "Vistoria salva! Alerta pericial e enquadramento de infração minerária/ambiental registrado."
             } else {
-                "Vistoria registrada com foto criptografada AES-256 e geolocalização."
+                "Vistoria registrada com foto criptografada AES-256 e conformidade ambiental/minerária."
             }
             onDone()
         }

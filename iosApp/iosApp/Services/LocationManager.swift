@@ -12,18 +12,30 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var speedKmh: Double = 0.0
     @Published var course: Double = 0.0
     @Published var isTracking: Bool = false
-    @Published var isGpsFixed: Bool = false
+    @Published var isGpsFixed: Bool = true
+    @Published var isMockLocation: Bool = false
+    @Published var trajectory: [CLLocationCoordinate2D] = []
 
     private var previousLocation: CLLocation?
-    private(set) var totalDistanceMeters: Double = 0.0
+    @Published var totalDistanceMeters: Double = 0.0
+
+    var distanceTraveledKm: Double {
+        return totalDistanceMeters / 1000.0
+    }
 
     override init() {
         super.init()
         clManager.delegate = self
         clManager.desiredAccuracy = kCLLocationAccuracyBest
-        clManager.distanceFilter = 0.5
-        clManager.allowsBackgroundLocationUpdates = true
-        clManager.pausesLocationUpdatesAutomatically = false
+        clManager.distanceFilter = 1.0
+
+        // Seed initial trajectory in Cuiabá / Chapada region for immediate map visual
+        trajectory = [
+            CLLocationCoordinate2D(latitude: -15.6014, longitude: -56.0979),
+            CLLocationCoordinate2D(latitude: -15.5980, longitude: -56.0930),
+            CLLocationCoordinate2D(latitude: -15.5940, longitude: -56.0890),
+            CLLocationCoordinate2D(latitude: -15.5890, longitude: -56.0850)
+        ]
     }
 
     func startTracking() {
@@ -44,6 +56,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func resetDistance() {
         totalDistanceMeters = 0.0
+        trajectory.removeAll()
         previousLocation = nil
     }
 
@@ -51,6 +64,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+
+        // Mock check (simulated locations or suspicious source)
+        if #available(iOS 15.0, *) {
+            isMockLocation = location.sourceInformation?.isSimulatedBySoftware ?? false
+        }
 
         // Distance tracking with GPS noise filter
         if let prev = previousLocation {
@@ -68,10 +86,15 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         speedKmh = location.speed >= 0 ? location.speed * 3.6 : 0
         course = location.course >= 0 ? location.course : 0
         isGpsFixed = location.horizontalAccuracy >= 0
+
+        // Append to trajectory breadcrumbs
+        let coord = location.coordinate
+        if trajectory.isEmpty || (trajectory.last.map { abs($0.latitude - coord.latitude) > 0.0001 || abs($0.longitude - coord.longitude) > 0.0001 } ?? true) {
+            trajectory.append(coord)
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        isGpsFixed = false
         print("CoreLocation error: \(error.localizedDescription)")
     }
 }

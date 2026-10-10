@@ -201,6 +201,42 @@ fun RecordDetailDialog(
                     }
                 }
 
+                // Mining & ANM Specialized Section (if applicable)
+                if (record.anmProcessNumber.isNotBlank() || record.miningRegime != "SEM_TITULO" || record.justiceStatus != "REGULAR" || record.seizedMachinery.isNotBlank()) {
+                    Card(
+                        shape = RoundedCornerShape(10.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (record.justiceStatus != "REGULAR") Color(0xFFFFEBEE) else Color(0xFFF1F8E9)
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = if (record.justiceStatus != "REGULAR") Icons.Default.Warning else Icons.Default.Lock,
+                                    contentDescription = null,
+                                    tint = if (record.justiceStatus != "REGULAR") CriticalRed else ForestGreenDark,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "Perícia de Garimpo e Mineração (ANM / SEMA)",
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = if (record.justiceStatus != "REGULAR") CriticalRed else ForestGreenDark
+                                )
+                            }
+                            InfoLine("Processo ANM:", if (record.anmProcessNumber.isNotBlank()) record.anmProcessNumber else "Sem processo cadastrado")
+                            InfoLine("Regime Minerário:", record.miningRegime)
+                            InfoLine("Substância Mineral:", record.mineralSubstance)
+                            InfoLine("Justiça Ambiental:", record.justiceStatus)
+                            if (record.seizedMachinery.isNotBlank()) {
+                                InfoLine("Maquinários Apreendidos:", record.seizedMachinery)
+                            }
+                        }
+                    }
+                }
+
                 // Chain-of-Custody Hashes
                 Card(
                     shape = RoundedCornerShape(10.dp),

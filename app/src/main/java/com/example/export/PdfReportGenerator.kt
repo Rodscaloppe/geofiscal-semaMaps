@@ -171,6 +171,38 @@ object PdfReportGenerator {
             currentY += 50f
         }
 
+        // 4.5. Specialized Mining & ANM Assessment Box
+        if (record.anmProcessNumber.isNotBlank() || record.miningRegime != "SEM_TITULO" || record.justiceStatus != "REGULAR" || record.seizedMachinery.isNotBlank()) {
+            val miningBoxH = if (record.seizedMachinery.isNotBlank()) 68f else 54f
+            val miningRect = RectF(30f, currentY, 565f, currentY + miningBoxH)
+
+            val isCrime = record.justiceStatus != "REGULAR"
+            paint.color = if (isCrime) Color.parseColor("#FFEBEE") else Color.parseColor("#E8F5E9")
+            canvas.drawRoundRect(miningRect, 4f, 4f, paint)
+            paint.color = if (isCrime) Color.parseColor("#C62828") else Color.parseColor("#2E7D32")
+            paint.style = Paint.Style.STROKE
+            canvas.drawRoundRect(miningRect, 4f, 4f, paint)
+            paint.style = Paint.Style.FILL
+
+            paint.isFakeBoldText = true
+            paint.textSize = 10f
+            paint.color = if (isCrime) Color.parseColor("#C62828") else Color.parseColor("#2E7D32")
+            canvas.drawText("PERÍCIA DE MINERAÇÃO & REGULARIZAÇÃO ANM:", 40f, currentY + 15f, paint)
+
+            paint.textSize = 8.5f
+            paint.isFakeBoldText = false
+            paint.color = Color.BLACK
+            val anmText = if (record.anmProcessNumber.isNotBlank()) record.anmProcessNumber else "Sem processo ANM cadastrado"
+            canvas.drawText("Processo ANM: $anmText  |  Regime: ${record.miningRegime}  |  Substância: ${record.mineralSubstance}", 40f, currentY + 28f, paint)
+            canvas.drawText("Enquadramento Justiça Ambiental: ${record.justiceStatus}", 40f, currentY + 41f, paint)
+            if (record.seizedMachinery.isNotBlank()) {
+                paint.isFakeBoldText = true
+                canvas.drawText("Apreensão / Maquinários: ${record.seizedMachinery.take(80)}", 40f, currentY + 54f, paint)
+                paint.isFakeBoldText = false
+            }
+            currentY += miningBoxH + 12f
+        }
+
         // Notes
         if (record.notes.isNotBlank()) {
             paint.isFakeBoldText = true

@@ -1,115 +1,112 @@
 import SwiftUI
 import MapKit
-import shared
+
+enum IosNavTab: Int, CaseIterable {
+    case capture = 0
+    case history = 1
+    case map = 2
+    case dashboard = 3
+    case admin = 4
+
+    var label: String {
+        switch self {
+        case .capture: return "Captura"
+        case .history: return "Histórico"
+        case .map: return "Mapa"
+        case .dashboard: return "Painel"
+        case .admin: return "Admin"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .capture: return "camera.fill"
+        case .history: return "clock.arrow.circlepath"
+        case .map: return "map.fill"
+        case .dashboard: return "chart.bar.fill"
+        case .admin: return "person.badge.shield.checkmark.fill"
+        }
+    }
+}
 
 struct ContentView: View {
     @StateObject private var locationManager = LocationManager()
-    @State private var selectedTab = 0
+    @StateObject private var store = InspectionStore()
+    @State private var selectedTab: IosNavTab = .capture
+    @State private var showToast = false
+    @State private var toastMessage = ""
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            DashboardView(locationManager: locationManager)
+        VStack(spacing: 0) {
+            // SEMA-MT Top App Bar
+            TopBarView(store: store)
+
+            // Main Tab Navigation (Matching Android's 5 tabs)
+            TabView(selection: $selectedTab) {
+                NavigationStack {
+                    CaptureView(locationManager: locationManager, store: store)
+                }
                 .tabItem {
-                    Label("Dashboard", systemImage: "chart.bar.fill")
+                    Label(IosNavTab.capture.label, systemImage: IosNavTab.capture.icon)
                 }
-                .tag(0)
+                .tag(IosNavTab.capture)
 
-            MapInspectionView(locationManager: locationManager)
+                NavigationStack {
+                    HistoryView(store: store)
+                }
                 .tabItem {
-                    Label("Mapa", systemImage: "map.fill")
+                    Label(IosNavTab.history.label, systemImage: IosNavTab.history.icon)
                 }
-                .tag(1)
+                .tag(IosNavTab.history)
 
-            CaptureView(locationManager: locationManager)
+                NavigationStack {
+                    MapInspectionView(locationManager: locationManager, store: store)
+                }
                 .tabItem {
-                    Label("Captura", systemImage: "camera.fill")
+                    Label(IosNavTab.map.label, systemImage: IosNavTab.map.icon)
                 }
-                .tag(2)
+                .tag(IosNavTab.map)
 
-            HistoryView()
+                NavigationStack {
+                    DashboardView(store: store, locationManager: locationManager)
+                }
                 .tabItem {
-                    Label("Histórico", systemImage: "clock.fill")
+                    Label(IosNavTab.dashboard.label, systemImage: IosNavTab.dashboard.icon)
                 }
-                .tag(3)
-        }
-        .tint(Color("ForestGreen"))
-    }
-}
+                .tag(IosNavTab.dashboard)
 
-struct DashboardView: View {
-    @ObservedObject var locationManager: LocationManager
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 16) {
-                    // GPS Status Card
-                    GroupBox("GPS em Tempo Real") {
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Image(systemName: locationManager.isTracking ? "location.fill" : "location.slash")
-                                    .foregroundColor(locationManager.isTracking ? .green : .red)
-                                Text(locationManager.isTracking ? "GPS Ativo" : "GPS Inativo")
-                                    .fontWeight(.semibold)
-                            }
-
-                            LabeledContent("Latitude") {
-                                Text(String(format: "%.6f", locationManager.latitude))
-                                    .monospacedDigit()
-                            }
-                            LabeledContent("Longitude") {
-                                Text(String(format: "%.6f", locationManager.longitude))
-                                    .monospacedDigit()
-                            }
-                            LabeledContent("Altitude") {
-                                Text(String(format: "%.1f m", locationManager.altitude))
-                                    .monospacedDigit()
-                            }
-                            LabeledContent("Precisão") {
-                                Text(String(format: "±%.1f m", locationManager.accuracy))
-                                    .monospacedDigit()
-                            }
-                            LabeledContent("Velocidade") {
-                                Text(String(format: "%.1f km/h", locationManager.speedKmh))
-                                    .monospacedDigit()
-                            }
-                        }
-                    }
-
-                    // Actions
-                    HStack(spacing: 12) {
-                        Button(action: {
-                            if locationManager.isTracking {
-                                locationManager.stopTracking()
-                            } else {
-                                locationManager.startTracking()
-                            }
-                        }) {
-                            Label(
-                                locationManager.isTracking ? "Parar GPS" : "Iniciar GPS",
-                                systemImage: locationManager.isTracking ? "stop.fill" : "play.fill"
-                            )
-                            .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(locationManager.isTracking ? .red : Color("ForestGreen"))
-                    }
+                NavigationStack {
+                    AdminPanelView(store: store)
                 }
-                .padding()
+                .tabItem {
+                    Label(IosNavTab.admin.label, systemImage: IosNavTab.admin.icon)
+                }
+                .tag(IosNavTab.admin)
             }
-            .navigationTitle("GeoFiscal SEMA")
+            .tint(Color("ForestGreen"))
         }
-    }
-}
-
-struct HistoryView: View {
-    var body: some View {
-        NavigationStack {
-            List {
-                Text("Nenhum registro de vistoria encontrado")
-                    .foregroundColor(.secondary)
+        .overlay(alignment: .bottom) {
+            if showToast {
+                Text(toastMessage)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(Color.black.opacity(0.85))
+                    .cornerRadius(20)
+                    .padding(.bottom, 65)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
-            .navigationTitle("Histórico")
+        }
+        .onChange(of: store.uiMessage) { _, msg in
+            if let msg = msg {
+                toastMessage = msg
+                withAnimation { showToast = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    withAnimation { showToast = false }
+                    store.uiMessage = nil
+                }
+            }
         }
     }
 }

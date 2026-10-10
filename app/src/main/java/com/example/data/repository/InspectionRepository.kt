@@ -64,7 +64,12 @@ class InspectionRepository(
         sensorTelemetry: SensorTelemetry,
         semaTelemetry: SemaTelemetryResult,
         inspectorName: String,
-        notes: String
+        notes: String,
+        anmProcessNumber: String = "",
+        miningRegime: String = "SEM_TITULO",
+        mineralSubstance: String = "OURO",
+        justiceStatus: String = "REGULAR",
+        seizedMachinery: String = ""
     ): InspectionRecord = withContext(Dispatchers.IO) {
         val recordId = UUID.randomUUID().toString()
         val now = System.currentTimeMillis()
@@ -77,11 +82,11 @@ class InspectionRepository(
         )
 
         // 2. Cryptographic Record Fingerprint / Hash
-        val recordDigestContent = "$recordId-$now-${sensorTelemetry.latitude}-${sensorTelemetry.longitude}-$imageSha256-${semaTelemetry.semaStatus.name}"
+        val recordDigestContent = "$recordId-$now-${sensorTelemetry.latitude}-${sensorTelemetry.longitude}-$imageSha256-${semaTelemetry.semaStatus.name}-$anmProcessNumber-$justiceStatus"
         val recordSha256 = CryptoManager.calculateStringSha256(recordDigestContent)
 
         // 3. QR Code Payload
-        val qrPayload = "SEMA-MT|ID:$recordId|GEO:${sensorTelemetry.latitude},${sensorTelemetry.longitude}|STATUS:${semaTelemetry.semaStatus.name}|CAR:${semaTelemetry.carNumber}|HASH:${recordSha256.take(12)}|VAL:https://sema.mt.gov.br/valida/$recordId"
+        val qrPayload = "SEMA-MT|ID:$recordId|GEO:${sensorTelemetry.latitude},${sensorTelemetry.longitude}|STATUS:${semaTelemetry.semaStatus.name}|ANM:$anmProcessNumber|JUSTICA:$justiceStatus|HASH:${recordSha256.take(12)}|VAL:https://sema.mt.gov.br/valida/$recordId"
 
         val record = InspectionRecord(
             id = recordId,
@@ -100,14 +105,19 @@ class InspectionRepository(
             biome = semaTelemetry.biome,
             carNumber = semaTelemetry.carNumber,
             semaStatus = semaTelemetry.semaStatus.name,
-            hasIrregularity = semaTelemetry.hasIrregularity,
+            hasIrregularity = semaTelemetry.hasIrregularity || (justiceStatus != "REGULAR"),
             irregularityDetails = semaTelemetry.irregularityDetails,
             notes = notes,
             encryptedImagePath = encryptedPath,
             imageHashSha256 = imageSha256,
             recordHashSha256 = recordSha256,
             syncStatus = SyncStatus.PENDING.name,
-            qrCodePayload = qrPayload
+            qrCodePayload = qrPayload,
+            anmProcessNumber = anmProcessNumber,
+            miningRegime = miningRegime,
+            mineralSubstance = mineralSubstance,
+            justiceStatus = justiceStatus,
+            seizedMachinery = seizedMachinery
         )
 
         // 4. Save to Room database (inspection record)

@@ -73,6 +73,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Shield
+import com.example.data.model.MineracaoTelemetryResult
+import com.example.data.model.RegimeMinerario
+import com.example.data.model.StatusJusticaAmbiental
+import com.example.data.model.SubstanciaMineral
 import com.example.service.SemaTelemetryResult
 import com.example.service.SensorTelemetry
 import com.example.ui.theme.CriticalRed
@@ -93,6 +100,7 @@ fun CaptureScreen(
     val context = LocalContext.current
     val telemetry by viewModel.telemetry.collectAsStateWithLifecycle()
     val sema by viewModel.currentSemaTelemetry.collectAsStateWithLifecycle()
+    val mining by viewModel.currentMiningTelemetry.collectAsStateWithLifecycle()
     val capturedBitmap by viewModel.capturedPhoto.collectAsStateWithLifecycle()
     val isGpsTracking by viewModel.isGpsTracking.collectAsStateWithLifecycle()
 
@@ -100,6 +108,11 @@ fun CaptureScreen(
     var notes by remember { mutableStateOf("") }
     var inspectorName by remember { mutableStateOf("Fiscal Técnico SEMA-MT") }
     var isSaving by remember { mutableStateOf(false) }
+
+    var customAnmInput by remember { mutableStateOf("") }
+    var seizedMachineryInput by remember { mutableStateOf("") }
+    var selectedRegime by remember { mutableStateOf<RegimeMinerario?>(null) }
+    var selectedSubstance by remember { mutableStateOf<SubstanciaMineral?>(null) }
 
     // Permission launchers
     val permissionsLauncher = rememberLauncherForActivityResult(
@@ -514,6 +527,253 @@ fun CaptureScreen(
             }
         }
 
+        // -------------------------------------------------------------
+        // PERÍCIA DE GARIMPO & MINERAÇÃO ILEGAL (ANM / SEMA-MT / PF)
+        // -------------------------------------------------------------
+        val isMiningCrime = mining.statusJustica.isCrime
+        Card(
+            shape = RoundedCornerShape(14.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = if (isMiningCrime) Color(0xFFFFEBEE) else Color(0xFFF1F8E9)
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = if (isMiningCrime) Color(0xFFE57373) else Color(0xFFAED581),
+                    shape = RoundedCornerShape(14.dp)
+                )
+                .testTag("mining_telemetry_card")
+        ) {
+            Column(modifier = Modifier.padding(14.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = if (isMiningCrime) Icons.Default.Warning else Icons.Default.Shield,
+                            contentDescription = null,
+                            tint = if (isMiningCrime) CriticalRed else Color(0xFF2E7D32)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Perícia de Mineração & ANM",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = if (isMiningCrime) CriticalRed else Color(0xFF1B5E20)
+                        )
+                    }
+
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = Color(mining.statusJustica.colorHex)
+                    ) {
+                        Text(
+                            text = if (isMiningCrime) "CRIME / IRREGULAR" else "REGULAR",
+                            color = Color.White,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Legal Enquadramento Status Banner
+                Text(
+                    text = mining.statusJustica.label,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(mining.statusJustica.colorHex)
+                )
+
+                if (mining.isNearProtectedArea && mining.protectedAreaName != null) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "ALERTA CRÍTICO: Sobreposição à ${mining.protectedAreaName} (Vedação Art. 231 CF)",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color(0xFFB71C1C)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Enquadramento: ${mining.enquadramentoLegal}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // ANM Query Field
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedTextField(
+                        value = customAnmInput,
+                        onValueChange = { customAnmInput = it },
+                        label = { Text("Consultar Processo ANM") },
+                        placeholder = { Text(if (mining.anmProcess.isNotBlank()) mining.anmProcess else "Ex: 866.123/2019") },
+                        modifier = Modifier
+                            .weight(1f)
+                            .testTag("custom_anm_input"),
+                        singleLine = true
+                    )
+
+                    Button(
+                        onClick = { viewModel.evaluateCustomAnm(customAnmInput) },
+                        colors = ButtonDefaults.buttonColors(containerColor = ForestGreenDark),
+                        modifier = Modifier.testTag("query_anm_button")
+                    ) {
+                        Icon(Icons.Default.Search, contentDescription = "Consultar ANM")
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Checar")
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Titular and Regime info
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Titular Cadastrado:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = mining.titularProcesso,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Regime Minerário:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = (selectedRegime ?: mining.regimeMinerario).label,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Mineral Substance & Environmental Indicator Row
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            text = "Substância:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = "${(selectedSubstance ?: mining.substance).label} (${(selectedSubstance ?: mining.substance).symbol})",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFFE65100)
+                        )
+                    }
+
+                    Column {
+                        Text(
+                            text = "Área de Cavas:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = "${String.format("%.1f", mining.cavasAreaHectares)} ha",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Column {
+                        Text(
+                            text = "Licença SEMA:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = mining.licencaOperacaoSema ?: "Sem LO",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            color = if (mining.hasLicencaAtiva) Color(0xFF2E7D32) else CriticalRed
+                        )
+                    }
+                }
+
+                if (mining.alertaTurbidezHidrica || mining.presencaMercurio) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        if (mining.alertaTurbidezHidrica) {
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = Color(0xFFFFE082),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "Turbidez Hídrica Crítica",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF5D4037),
+                                    modifier = Modifier.padding(6.dp)
+                                )
+                            }
+                        }
+                        if (mining.presencaMercurio) {
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = Color(0xFFFFCDD2),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "Risco Mercúrio (Hg)",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFFB71C1C),
+                                    modifier = Modifier.padding(6.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // Machinery / Seized Equipment Input
+                OutlinedTextField(
+                    value = seizedMachineryInput,
+                    onValueChange = { seizedMachineryInput = it },
+                    label = { Text("Apreensão / Maquinários Identificados") },
+                    placeholder = { Text("Ex: 2 Escavadeiras CAT 320, 1 Balsa Draga, 1 Motor Estacionário MWM") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("seized_machinery_input"),
+                    maxLines = 2
+                )
+            }
+        }
+
         // Form Inputs: Title, Inspector, Notes
         OutlinedTextField(
             value = title,
@@ -554,7 +814,12 @@ fun CaptureScreen(
                 viewModel.saveInspection(
                     title = title,
                     notes = notes,
-                    inspectorName = inspectorName
+                    inspectorName = inspectorName,
+                    anmProcessNumber = if (customAnmInput.isNotBlank()) customAnmInput else mining.anmProcess,
+                    miningRegime = (selectedRegime ?: mining.regimeMinerario).name,
+                    mineralSubstance = (selectedSubstance ?: mining.substance).name,
+                    justiceStatus = mining.statusJustica.name,
+                    seizedMachinery = seizedMachineryInput
                 ) {
                     isSaving = false
                     onInspectionSaved()

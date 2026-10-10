@@ -18,3 +18,7 @@ app/build
 local.properties
 .env
 debug.keystore
+.gradle_home/
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad

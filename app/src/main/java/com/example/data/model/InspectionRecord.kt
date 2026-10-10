@@ -46,5 +46,10 @@ data class InspectionRecord(
     val syncStatus: String, // SyncStatus name
     val syncTimestamp: Long? = null,
     val remoteServerId: String? = null,
-    val qrCodePayload: String
+    val qrCodePayload: String,
+    val anmProcessNumber: String = "",
+    val miningRegime: String = "SEM_TITULO",
+    val mineralSubstance: String = "OURO",
+    val justiceStatus: String = "REGULAR",
+    val seizedMachinery: String = ""
 )
