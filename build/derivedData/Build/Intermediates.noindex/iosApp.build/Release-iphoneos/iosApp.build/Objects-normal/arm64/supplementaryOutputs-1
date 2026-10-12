@@ -1,0 +1,12 @@
+{
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/GeoFiscalSemaApp.swift" : {
+    "abi-baseline-json" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp.abi.json",
+    "const-values" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.swiftconstvalues",
+    "dependencies" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.d",
+    "diagnostics" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.dia",
+    "objc-header" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-Swift.h",
+    "swiftdoc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp.swiftdoc",
+    "swiftmodule" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp.swiftmodule",
+    "swiftsourceinfo" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp.swiftsourceinfo"
+  }
+}

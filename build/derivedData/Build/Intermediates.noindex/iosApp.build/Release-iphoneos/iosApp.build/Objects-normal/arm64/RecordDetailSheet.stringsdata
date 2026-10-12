@@ -1,0 +1,96 @@
+{
+  "source": "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/RecordDetailSheet.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Detalhes da Vistoria",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • Fiscal: %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Foto pericial criptografada (AES-256-CBC)",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "ALERTA AMBIENTAL DETECTADO",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "CONFORMIDADE AMBIENTAL REGULAR",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Geolocalização & Telemetria",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parecer do Fiscal",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cadeia de Custódia (SHA-256)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Exportar Laudo PDF",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "QR Code",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fechar",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 158
+        }
+      }
+    ]
+  },
+  "version": 1
+}

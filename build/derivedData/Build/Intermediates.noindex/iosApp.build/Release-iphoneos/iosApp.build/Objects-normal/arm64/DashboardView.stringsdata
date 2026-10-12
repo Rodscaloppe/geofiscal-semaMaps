@@ -1,0 +1,160 @@
+{
+  "source": "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/DashboardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Painel",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "PAINEL GERENCIAL DE FISCALIZAÇÃO",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "SEMA-MT • Métricas e Inteligência Territorial",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld Regulares",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Índice de conformidade do CAR",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Conformidade",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distribuição por Bioma (Mato Grosso)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Exportação de Relatórios Gerenciais",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Laudo PDF",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Planilha Excel/CSV",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sincronização em Lote",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enviando pacotes criptografados...",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "Servidor SEMA-MT: Online",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sincronizando...",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sincronizar Todas as Vistorias Pendentes",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "Alertas de Irregularidade Recentes",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 194
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 205
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld (%lld%%)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 269
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,56 @@
+{
+  "source": "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/MapInspectionView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Mapa",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld Pontos",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mapa Geoespacial SEMA-MT",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %@ | CAR: %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 170
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • Gravidade: %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 188
+        }
+      },
+      {
+        "comment": "",
+        "key": "Abrir Laudo Completo",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 178
+        }
+      }
+    ]
+  },
+  "version": 1
+}

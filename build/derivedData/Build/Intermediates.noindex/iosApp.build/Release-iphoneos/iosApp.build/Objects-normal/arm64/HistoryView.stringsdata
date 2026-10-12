@@ -1,0 +1,104 @@
+{
+  "source": "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/HistoryView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Histórico de Campo",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Seção",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vistorias (%lld)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Denúncias (%lld)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Buscar por título, município ou CAR...",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nenhum registro de vistoria encontrado",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tente alterar os filtros ou realizar uma nova captura.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nenhuma denúncia cadastrada",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "ALERTA",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "REGULAR",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Detalhes",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 242
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 321
+        }
+      }
+    ]
+  },
+  "version": 1
+}

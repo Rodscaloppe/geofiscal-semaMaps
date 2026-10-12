@@ -1,0 +1,101 @@
+{
+  "" : {
+    "const-values" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.swiftconstvalues",
+    "dependencies" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.d",
+    "diagnostics" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.dia",
+    "emit-module-dependencies" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary-emit-module.dia",
+    "pch" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/iosApp-primary.swiftdeps"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/ContentView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/ContentView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/GeoFiscalSemaApp.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/GeoFiscalSemaApp.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/GeoFiscalSemaApp.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/GeoFiscalSemaApp.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Models/InspectionModels.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/InspectionModels.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/InspectionModels.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/InspectionModels.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Services/CameraManager.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/CameraManager.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/CameraManager.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/CameraManager.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Services/ExportService.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/ExportService.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/ExportService.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/ExportService.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Services/InspectionStore.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/InspectionStore.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/InspectionStore.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/InspectionStore.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Services/LocationManager.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/LocationManager.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/LocationManager.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/LocationManager.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Services/SemaIntegrationService.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/SemaIntegrationService.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/SemaIntegrationService.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/SemaIntegrationService.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Services/SensorManager.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/SensorManager.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/SensorManager.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/SensorManager.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/AdminPanelView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/AdminPanelView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/AdminPanelView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/AdminPanelView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/CaptureView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/CaptureView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/CaptureView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/CaptureView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/Components/TopBarView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/TopBarView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/TopBarView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/TopBarView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/DashboardView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/DashboardView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/DashboardView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/DashboardView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/HistoryView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/HistoryView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/HistoryView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/HistoryView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/MapInspectionView.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/MapInspectionView.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/MapInspectionView.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/MapInspectionView.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/QrCodeSheet.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/QrCodeSheet.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/QrCodeSheet.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/QrCodeSheet.o"
+  },
+  "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/RecordDetailSheet.swift" : {
+    "index-unit-output-path" : "/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/RecordDetailSheet.o",
+    "llvm-bc" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/RecordDetailSheet.bc",
+    "object" : "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/build/derivedData/Build/Intermediates.noindex/iosApp.build/Release-iphoneos/iosApp.build/Objects-normal/arm64/RecordDetailSheet.o"
+  }
+}

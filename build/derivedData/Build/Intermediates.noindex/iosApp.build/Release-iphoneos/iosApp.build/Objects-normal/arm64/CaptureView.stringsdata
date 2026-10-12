@@ -1,0 +1,240 @@
+{
+  "source": "/Volumes/Macintosh_HD/Users/user301275/geofiscal-semaMaps/iosApp/iosApp/Views/CaptureView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Captura Georreferenciada",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 402
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vistoria Registrada!",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 425
+        }
+      },
+      {
+        "comment": "",
+        "key": "VISTORIA GEOESPACIAL SEMA-MT",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Câmera com Telemetria e Criptografia",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tirar Outra Foto",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Galeria",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ou Importar Imagem da Galeria",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "CoreLocation & Sensores",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "GPS de Alta Precisão Ativo",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Buscando satélites...",
+        "location": {
+          "startingColumn": 99,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@°",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km/h • %@ km",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "ALERTA: Mock GPS",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hardware Autêntico",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fix de Precisão",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 249
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pausar GPS",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rastrear em 2º Plano",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "ALERTA AMBIENTAL SEMA-MT",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "EM CONFORMIDADE AMBIENTAL",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cadastro Ambiental Rural (CAR)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 300
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validar CAR",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 309
+        }
+      },
+      {
+        "comment": "",
+        "key": "Título da Vistoria",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 337
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ex: Vistoria Preventiva Fazenda Santa Fé",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parecer do Fiscal / Observações Técnicas",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 344
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nome do Fiscal Responsável",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 352
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fiscal Técnico SEMA-MT",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 354
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salvar Vistoria com Fé Pública (SHA-256)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 390
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 426
+        }
+      },
+      {
+        "comment": "",
+        "key": "O laudo foi assinado criptograficamente e salvo na base de dados com fé pública.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 428
+        }
+      }
+    ]
+  },
+  "version": 1
+}
